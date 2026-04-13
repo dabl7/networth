@@ -996,7 +996,8 @@
       marble_rod_number=get('marble_r');
 
       wedge_number=get('wedge');
-      peppermint_wheel_number=get('back_christmas');
+      peppermint_front_number=get('back_christmas');
+      peppermint_back_number=ge('front_christmas')
       corner_wedge_number=get('corner');
       wooden_seat_number=get('seat');
       step_number=get('step');
@@ -1301,7 +1302,7 @@
       if (b_potion>potion_max) {min+=(b_potion-potion_max)*350} //shop + free ones
       else {min+=b_potion*0} //free ones
 
-      b_peppermint=peppermint_wheel_number
+      b_peppermint=Math.min(peppermint_back_number,peppermint_front_number) //lowest from the peppermint wheels
       max+=b_peppermint*750/2 //shop 750g for 2
       min+=b_peppermint*0 //red gift
 
@@ -1777,12 +1778,6 @@
       io('out').textContent=out;
     }
 
-    function check() {
-      //checks if theres negative shit from dumbasses
-      //check if car seats + servos and wheels and boat motors make sense
-      //check if pilot seat + jets make sense
-    }
-    
     io('calc').onclick=networth;
   </script>
 </body>
