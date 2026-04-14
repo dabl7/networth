@@ -945,6 +945,9 @@
   <pre id="out">click calculate</pre>
   <script>
     //original version was made in python on 8 dec 2024
+    //v1.0.0 - initial release
+    //v1.0.1 - fixed peppermin wheels (takes the minimum from both)
+    //v1.0.2 - fixed some blocks going into negatives (because of low amount of chests bought), removed winter 2020 chests bought counter (impossible to determine because toy blocks were on sale)
 
     //inventory net worth calculator 9 apr 2026 (by @dabl2928 on youtube)
     //this script is licensed under GNU General Public License v3
@@ -964,6 +967,11 @@
       tmp=parseFloat(io(id).value);
       val=Math.floor(tmp);
       return val;
+    }
+
+    function plus(num) {
+      if (num<0) {num=0}
+      return num
     }
 
     function networth() {
@@ -1086,8 +1094,8 @@
       max=0;
 
       b_2021winter_chest = Math.floor(candy_sword_number/1) //no other way to get candy sword so its correct
-      min+=b_2021winter_chest*60
-      max+=b_2021winter_chest*60
+      min+=plus(b_2021winter_chest*60)
+      max+=plus(b_2021winter_chest*60)
 
       w2021_reduce_harpoon = Math.floor(b_2021winter_chest*0.205)
       w2021_reduce_pine = Math.floor(b_2021winter_chest*0.6)
@@ -1097,8 +1105,8 @@
       w2021_reduce_toy = Math.floor(b_2021winter_chest*8.28)
 
       b_2020winter_chest = 0 //Math.floor((toy_number - w2021_reduce_toy)/8.4) //irrelevant because toy blocks are in shop apparently
-      min+=b_2020winter_chest*50
-      max+=b_2020winter_chest*50
+      min+=plus(b_2020winter_chest*50)
+      max+=plus(b_2020winter_chest*50)
 
       w2020_reduce_harpoon = Math.floor(b_2020winter_chest*0.205*1)
       w2020_reduce_pine = Math.floor(b_2020winter_chest*0.3*2)
@@ -1116,7 +1124,7 @@
       common_max=1 //one was obtainable from code TTTRRREEEAAASSSUUURRREEE
       max+=b_common*5
       if (b_common>common_max) {min+=(b_common-1)*5}
-      else {min+=b_common*5} //if only 1 common chest
+      else {min+=plus(b_common*0)} //if only 1 common chest
       // BUILDING CATEGORY
       c_reduce_wood = Math.floor(b_common*0.25)
       c_reduce_fabric = Math.floor(b_common*0.25)
@@ -1132,8 +1140,8 @@
       c_reduce_window = Math.floor(b_common*0.33)
 
       b_uncommon = uncommon_number/0.01
-      min+=b_uncommon*15
-      max+=b_uncommon*15
+      min+=plus(b_uncommon*15)
+      max+=plus(b_uncommon*15)
       // BUILDING CATEGORY
       u_reduce_rusted_metal = Math.floor(b_uncommon*0.3*4)
       u_reduce_metal = Math.floor(b_uncommon*0.3*4)
@@ -1160,8 +1168,8 @@
       u_reduce_trapdoor = Math.floor(b_uncommon*0.099)
 
       b_rare = rare_number/(0.005*2)
-      min+=b_rare*45
-      max+=b_rare*45
+      min+=plus(b_rare*45)
+      max+=plus(b_rare*45)
       // BUILDING CATEGORY
       r_reduce_conrete = Math.floor(b_rare*12*0.3)
       r_reduce_marble = Math.floor(b_rare*12*0.3)
@@ -1190,8 +1198,8 @@
       r_reduce_hinge = Math.floor(b_rare*0.167)
 
       b_epic = Math.floor(epic_number/(0.003*4))
-      min+=b_epic*135
-      max+=b_epic*135
+      min+=plus(b_epic*135)
+      max+=plus(b_epic*135)
       // BUILDING CATEGORY
       e_reduce_titanium = Math.floor(b_epic*38*0.3)
       e_reduce_concrete = Math.floor(b_epic*38*0.3)
@@ -1217,8 +1225,8 @@
       e_reduce_thruster = Math.floor(b_epic*2/8)
 
       b_legendary = legendary_number/(0.001*8)
-      min+=b_legendary*405
-      max+=b_legendary*405
+      min+=plus(b_legendary*405)
+      max+=plus(b_legendary*405)
       // BUILDING CATEGORY
       l_reduce_obsidian = Math.floor(b_legendary*120/3)
       l_reduce_titanium = Math.floor(b_legendary*120/3)
@@ -1303,440 +1311,440 @@
       else {min+=b_potion*0} //free ones
 
       b_peppermint=Math.min(peppermint_back_number,peppermint_front_number) //lowest from the peppermint wheels
-      max+=b_peppermint*750/2 //shop 750g for 2
-      min+=b_peppermint*0 //red gift
+      max+=plus(b_peppermint*750/2) //shop 750g for 2
+      min+=plus(b_peppermint*0) //red gift
 
       b_big_cannon=big_cannon_number
       //codes useless because min=0
-      max+=b_big_cannon*250 //shop 250g for 1 after pvp pack removal (the 550 per pvp pack is mostly included from tnt barrel number)
-      min+=b_big_cannon*0 //spiky ice egg 2019
+      max+=plus(b_big_cannon*250) //shop 250g for 1 after pvp pack removal (the 550 per pvp pack is mostly included from tnt barrel number)
+      min+=plus(b_big_cannon*0) //spiky ice egg 2019
 
       b_sword=sword_number
       //codes useless because min=0
-      max+=b_sword*50 //shop price 50g for 1
-      min+=b_sword*0 //teacup egg 2019
+      max+=plus(b_sword*50) //shop price 50g for 1
+      min+=plus(b_sword*0) //teacup egg 2019
 
       b_flintlock=flintlock_number
       //codes useless because min=0
-      max+=b_flintlock*50 //shop price 50g for 1
-      min+=b_flintlock*0 //lava egg 2019
+      max+=plus(b_flintlock*50) //shop price 50g for 1
+      min+=plus(b_flintlock*0) //lava egg 2019
 
       b_mounted_cannon = mounted_cannon_number
       //codes useless because min=0
-      max+=b_mounted_cannon*50 //shop price
-      min+=b_mounted_cannon*0 //super egg 2019
+      max+=plus(b_mounted_cannon*50) //shop price
+      min+=plus(b_mounted_cannon*0) //super egg 2019
 
       b_tnt = Math.floor(tnt_number/5) //number of pvp packs bought, but only for estimating total gold, cant know for sure
       //from codes useless because min=0
-      max+=b_tnt*550 //pvp pack shop price
-      min+=b_tnt*0 //lava egg 2020
+      max+=plus(b_tnt*550) //pvp pack shop price
+      min+=plus(b_tnt*0) //lava egg 2020
 
       b_treasure = treasure_number //og yellow chest
       treasure_max=4 //from codes
-      max+=b_treasure*80 //shop price at start of game?
+      max+=plus(b_treasure*80) //shop price at start of game?
       if (b_treasure>treasure_max) {min+=(b_treasure-treasure_max)*80}
-      else {min+=b_treasure*0} //free ones
+      else {min+=plus(b_treasure*0)} //free ones
 
       b_wood = Math.floor((wood_number - reduce_wood)/50)
       wood_max=(4+20+1+25+20)/50 //from codes
-      max+=b_wood*250 //shop price 250g for 50
+      max+=plus(b_wood*250) //shop price 250g for 50
       if (b_wood>wood_max) {min+=(b_wood-wood_max)*250} //shop price 250g for 50
-      else {min+=b_wood*0} //for free from codes
+      else {min+=plus(b_wood*0)} //for free from codes
       
       b_wood_rod = Math.floor((wood_rod_number - reduce_wood_rod)/25)
       wood_rod_max=(2+100+1)/25 //from codes
-      max+=b_wood_rod*125 //shop price 125g for 25
+      max+=plus(b_wood_rod*125) //shop price 125g for 25
       if (b_wood_rod>wood_rod_max) {min+=(b_wood_rod-wood_rod_max)*125} //shop price 125g for 25
-      else {min+=b_wood_rod*0} //could all be obtained for free      
+      else {min+=plus(b_wood_rod*0)} //could all be obtained for free      
 
       b_boxing = boxing_number
       //from codes useless because min=0
-      min+=b_boxing*0 //spider quest 2020
-      max+=b_boxing*100 //shop price
+      min+=plus(b_boxing*0) //spider quest 2020
+      max+=plus(b_boxing*100) //shop price
 
       b_classic = classic_number
       classic_max=5+15+5+7+5+15+10+1 //from codes
-      max+=b_classic*50/3 //former shop price 50g for 3
+      max+=plus(b_classic*50/3) //former shop price 50g for 3
       if (b_classic>classic_max) {min+=(b_classic-classic_max)*50/3} //excluding free ones
-      else {min+=b_classic*0} //free ones
+      else {min+=plus(b_classic*0)} //free ones
 
       b_smooth_wood = Math.floor((smooth_wood_number - w_reduce_smooth_wood)/50)
-      min+=b_smooth_wood*250 //shop price 250g for 50
-      max+=b_smooth_wood*250 //shop price 250g for 50
+      min+=plus(b_smooth_wood*250) //shop price 250g for 50
+      max+=plus(b_smooth_wood*250) //shop price 250g for 50
 
       b_candy = candy_block_number
-      min+=b_candy*40/5 //shop price 40g for 5
-      max+=b_candy*40/5 //shop price 40g for 5 (massive present 2017)
+      min+=plus(b_candy*40/5) //shop price 40g for 5
+      max+=plus(b_candy*40/5) //shop price 40g for 5 (massive present 2017)
 
       b_candy_rod = candy_rod_number
-      min+=b_candy_rod*40/5 //shop price 40g for 5
-      max+=b_candy_rod*40/5 //shop price 40g for 5 (tall present 2017)
+      min+=plus(b_candy_rod*40/5) //shop price 40g for 5
+      max+=plus(b_candy_rod*40/5) //shop price 40g for 5 (tall present 2017)
 
       b_wedge = wedge_number - reduce_wedge
       wedge_max=100 //100 from ramp
-      max+=b_wedge*10 //shop price 10g for 1
+      max+=plus(b_wedge*10) //shop price 10g for 1
       if (b_wedge>wedge_max) {min+=(b_wedge-wedge_max)*10}
-      else {min+=b_wedge*0} //free ones
+      else {min+=plus(b_wedge*0)} //free ones
 
       b_pumpkin = pumpkin_number //old weird pumpkin 1
-      min+=b_pumpkin*0 //2% chance on black chest
-      max+=b_pumpkin*50 //purchasable 2017 then 2018
+      min+=plus(b_pumpkin*0) //2% chance on black chest
+      max+=plus(b_pumpkin*50) //purchasable 2017 then 2018
 
       b_corner_wedge = corner_wedge_number - reduce_corner_wedge //ERROR -250
       corner_wedge_max=25 //25 from ramp
-      max+=b_corner_wedge*10 //shop price 10g for 1
+      max+=plus(b_corner_wedge*10) //shop price 10g for 1
       if (b_corner_wedge>corner_wedge_max) {min+=(b_corner_wedge-corner_wedge_max)*10}
-      else {min+=b_corner_wedge*0} //for free
+      else {min+=plus(b_corner_wedge*0)} //for free
 
       b_wooden_seat = wooden_seat_number - reduce_wooden_seat
       wooden_seat_max=1+10 + 1//from codes and first time playing
-      max+=b_wooden_seat*10 //shop price 10g for 1
+      max+=plus(b_wooden_seat*10) //shop price 10g for 1
       if (b_wooden_seat>wooden_seat_max) {min+=(b_wooden_seat-wooden_seat_max)*10} //excluding the free ones obtainable
-      else {min+=b_wooden_seat*0} //for free
+      else {min+=plus(b_wooden_seat*0)} //for free
 
       b_step = Math.floor((step_number - reduce_step)/10)
-      min+=b_step*50 //shop price 50g for 10
-      max+=b_step*50 //shop price 50g for 10
+      min+=plus(b_step*50) //shop price 50g for 10
+      max+=plus(b_step*50) //shop price 50g for 10
 
       b_truss = Math.floor((truss_number - reduce_truss)/20)
-      min+=b_truss*125 //shop price 125g for 20
-      max+=b_truss*125 //shop price 125g for 20
+      min+=plus(b_truss*125) //shop price 125g for 20
+      max+=plus(b_truss*125) //shop price 125g for 20
 
       b_mast = mast_number - reduce_mast
       mast_max=1 //from codes
-      max+=b_mast*35 //shop price 35g for 1
+      max+=plus(b_mast*35) //shop price 35g for 1
       if (b_mast>mast_max) {min+=(b_mast-mast_max)*35}
-      else {min+=b_mast*0} //for free
+      else {min+=plus(b_mast*0)} //for free
 
       b_helm = helm_number - reduce_helm
       helm_max=1 //from codes
-      max+=b_helm*45 //shop price 45g for 1
+      max+=plus(b_helm*45) //shop price 45g for 1
       if (b_helm>helm_max) {min+=(b_helm-helm_max)*45} //excludes free one
-      else {min+=b_helm*0} //obtained for free
+      else {min+=plus(b_helm*0)} //obtained for free
 
       b_window = window_number - reduce_window
-      min+=b_window*25 //shop price 25g for 1
-      max+=b_window*25 //shop price 25g for 1
+      min+=plus(b_window*25) //shop price 25g for 1
+      max+=plus(b_window*25) //shop price 25g for 1
 
       b_door = door_number - reduce_door
-      min+=b_door*15 //shop price 15g for 1
-      max+=b_door*15 //shop price 15g for 1
+      min+=plus(b_door*15) //shop price 15g for 1
+      max+=plus(b_door*15) //shop price 15g for 1
 
       b_locked_door = locked_door_number - reduce_locked_door
       //codes useless because min=0
-      max+=b_locked_door*30 //shop price 30g for 1
-      min+=b_locked_door*0 //beanstalk egg 2019
+      max+=plus(b_locked_door*30) //shop price 30g for 1
+      min+=plus(b_locked_door*0) //beanstalk egg 2019
 
       b_trapdoor = trapdoor_number - reduce_trapdoor
-      min+=b_trapdoor*15 //shop price 15g for 1
-      max+=b_trapdoor*15 //shop price 15g for 1
+      min+=plus(b_trapdoor*15) //shop price 15g for 1
+      max+=plus(b_trapdoor*15) //shop price 15g for 1
 
       b_dynamite = dynamite_number
       //from codes useless probably ?!?!!?!?!?!?
       dynamite_max=5 //from codes
-      min+=b_dynamite*0 //TO DO TODO todo but why bother (old pvp pack is included from before)
-      max+=b_dynamite*20 //shop price
+      min+=plus(b_dynamite*0) //TO DO TODO todo but why bother (old pvp pack is included from before)
+      max+=plus(b_dynamite*20) //shop price
 
       b_spike = spike_number
       spike_max=5 //5 free ones upon joining
-      max+=b_spike*25 //shop price 25g for 1
+      max+=plus(b_spike*25) //shop price 25g for 1
       if (b_spike>spike_max) {min+=(b_spike-spike_max)*25} //shop + free ones
       else {min+=b_spike*0} //free ones
 
       b_pine = pine_number - w_reduce_pine // number of pine "packs" bought
       //pine was obtainable through codes but useless because min=0 anyway
-      max+=b_pine*80 //80g for 1
+      max+=plus(b_pine*80) //80g for 1
       min+=b_pine*0 //free from white chests spawning in 2019
 
       b_glass = Math.floor((glass_number - reduce_glass)/25)
       glass_max=(50+25+20+10)/25 //from codes
-      max+=b_glass*250 //shop 250g for 25
+      max+=plus(b_glass*250) //shop 250g for 25
       if (b_glass>glass_max) {min+=(b_glass-glass_max)*250} //excluding free ones
       else {min+=b_glass*0} //for free
 
       b_stone = Math.floor((stone_number - reduce_stone)/50)
       //1 obtainable from code but meh
-      min+= b_stone*275
-      max+= b_stone*275 //275g for 50
+      min+= plus(b_stone*275)
+      max+= plus(b_stone*275) //275g for 50
 
       b_stone_rod = Math.floor((stone_rod_number)/25)
       //1 obtainable from code but meh
-      min+=b_stone_rod*135
-      max+=b_stone_rod*135 //135g for 25
+      min+=plus(b_stone_rod*135)
+      max+=plus(b_stone_rod*135) //135g for 25
 
       b_torch = torch_number - reduce_torch
-      min+=b_torch*10 //shop
-      max+=b_torch*10 //shop
+      min+=plus(b_torch*10) //shop
+      max+=plus(b_torch*10) //shop
 
       b_lamp = lamp_number - reduce_lamp
       //codes useless because min=0
-      min+=b_lamp*0 //free from skeleton quest
-      max+=b_lamp*30 //the most expensive shop price
+      min+=plus(b_lamp*0) //free from skeleton quest
+      max+=plus(b_lamp*30) //the most expensive shop price
 
       b_candle = candle_number //including older prices
-      min+=b_candle*0 //free from skeleton quest (black chest)
-      max+=b_candle*50 //the most expensive shop price
+      min+=plus(b_candle*0) //free from skeleton quest (black chest)
+      max+=plus(b_candle*50) //the most expensive shop price
 
       b_minigun = minigun_number
       minigun_max=1 //free upon joining
-      max += b_minigun*150 //shop price
+      max += plus(b_minigun*150) //shop price
       if (b_minigun>minigun_max) {min+=(b_minigun-minigun_max)*150} //shop + free one
       else {min+=b_minigun*0} //free one
 
       b_plastic = Math.floor((plastic_number - reduce_plastic)/50)
       //codes useless because min=0
-      min+=b_plastic*0 //green egg 2018
-      max+=b_plastic*300 //shop 300g for 50
+      min+=plus(b_plastic*0) //green egg 2018
+      max+=plus(b_plastic*300) //shop 300g for 50
 
       b_ice = Math.floor((ice_number - reduce_ice)/50)
       //ice from codes/quests is USELESS (because min=0 anyway)
-      max += b_ice*350 //shop 350g for 50
-      min += b_ice*0 //blue egg 2018
+      max += plus(b_ice*350) //shop 350g for 50
+      min += plus(b_ice*0) //blue egg 2018
 
       b_rusted_metal = Math.floor((rusted_metal_number - reduce_rusted_metal)/50)
       //1 obtainable from code but meh
-      min+=b_rusted_metal*300
-      max+=b_rusted_metal*300 //shop 300g for 50
+      min+=plus(b_rusted_metal*300)
+      max+=plus(b_rusted_metal*300) //shop 300g for 50
 
       b_rusted_rod = Math.floor((rusted_rod_number - reduce_rusted_rod)/25)
       //1 obtainable from code but meh
-      min+=b_rusted_rod*125
-      max+=b_rusted_rod*125 //shop 125g for 25
+      min+=plus(b_rusted_rod*125)
+      max+=plus(b_rusted_rod*125) //shop 125g for 25
 
       b_easter_jetpack = easter_jetpack_number
-      max += b_easter_jetpack*350 //shop price (former)
-      min += b_easter_jetpack*0 //galaxy egg 2019
+      max+=plus(b_easter_jetpack*350) //shop price (former)
+      min+=plus(b_easter_jetpack*0) //galaxy egg 2019
 
       b_fabric = Math.floor((fabric_number - reduce_fabric)/50)
       //codes useless because min=0
-      min+=b_fabric*0 //purple egg 2018, black chest
-      max+=b_fabric*300 //300g for 50 shop
+      min+=plus(b_fabric*0) //purple egg 2018, black chest
+      max+=plus(b_fabric*300) //300g for 50 shop
 
       b_brick = Math.floor((brick_number - reduce_brick)/50)
       //codes/quests useless because min=0
-      max += b_brick*375 //shop price 375g for 50
-      min += b_brick*0 //red egg 2018
+      max+=plus(b_brick*375) //shop price 375g for 50
+      min+=plus(b_brick*0) //red egg 2018
 
       b_star_balloon=star_balloon_number
       star_balloon_max=20+20+40 //free from codes
-      max+=b_star_balloon*45/3 //converted from regular balloons (45g for 3)
+      max+=plus(b_star_balloon*45/3) //converted from regular balloons (45g for 3)
       if (b_star_balloon>star_balloon_max) {min+=(b_star_balloon-star_balloon_max)*40/3 //shop price 40g for 3 (former)
       } else {min+=b_star_balloon*0} //free from codes
       
       b_balloon = balloon_number - reduce_balloon //excludes ones from chests
-      max+=b_balloon*45/3 //shop price
-      min+=b_balloon*0 //bee egg 2020
+      max+=plus(b_balloon*45/3) //shop price
+      min+=plus(b_balloon*0) //bee egg 2020
 
       b_sand = Math.floor((sand_number - reduce_sand)/50)
       //codes dont matter because black chest gave it for free
-      max += b_sand*300 //shop price 300g for 50
-      min += b_sand*0 //black chest reward
+      max+=plus(b_sand*300) //shop price 300g for 50
+      min+=plus(b_sand*0) //black chest reward
 
       b_grass = Math.floor((grass_number - reduce_grass)/50)
       //grass blocks from codes useless because min=0
-      max += b_grass*300 //shop price 300g for 50
-      min += b_grass*0 //black chest reward
+      max+=plus(b_grass*300) //shop price 300g for 50
+      min+=plus(b_grass*0) //black chest reward
 
       new_firework_number = firework4 + firework3 + firework2 + firework1
       b_new_firework = Math.floor(new_firework_number/3)
-      max += b_new_firework*150 //highest price ever
-      min += b_new_firework*0 //from codes, quests, firework box during july
+      max+=plus(b_new_firework*150) //highest price ever
+      min+=plus(b_new_firework*0) //from codes, quests, firework box during july
       //ACCURACY COULD PROBABLY BE IMPROVED HERE (by looking at which codes...) but why bother
 
       b_snowball = snowball_number
-      max += b_snowball*400 //shop price
-      min += b_snowball*0 //from 2021 presents
+      max+=plus(b_snowball*400) //shop price
+      min+=plus(b_snowball*0) //from 2021 presents
 
       b_metal = Math.floor((metal_number - reduce_metal)/50)
-      max+=b_metal*325
-      min+=b_metal*325 //325g for 
+      max+=plus(b_metal*325)
+      min+=plus(b_metal*325) //325g for 
       
       b_metal_rod = Math.floor((metal_rod_number - reduce_metal_rod)/25)
-      max+=b_metal_rod*162 //162g for 25
-      min+=b_metal_rod*162
+      max+=plus(b_metal_rod*162) //162g for 25
+      min+=plus(b_metal_rod*162)
 
       b_ibeam = Math.floor((ibeam_number - reduce_ibeam)/50)
-      max+=b_ibeam*325 //325g for 50
-      min+=b_ibeam*325
+      max+=plus(b_ibeam*325) //325g for 50
+      min+=plus(b_ibeam*325)
 
       b_metal_chair = metal_chair_number - reduce_metal_chair
       chair_max=10+1 //from codes
-      max+=b_metal_chair*35 //shop rotation 35g for 1
+      max+=plus(b_metal_chair*35) //shop rotation 35g for 1
       if (b_metal_chair>chair_max) {min+=(b_metal_chair-chair_max)*35} //excluding the free ones
       else {min+=b_metal_chair*0} //for free
 
       b_concrete = Math.floor((concrete_number - reduce_concrete)/50)
-      max+=b_concrete*350 //350g for 50
-      min+=b_concrete*350
+      max+=plus(b_concrete*350) //350g for 50
+      min+=plus(b_concrete*350)
 
       b_concrete_rod = Math.floor((concrete_rod_number - reduce_concrete_rod)/25)
-      max+=b_concrete_rod*175
-      min+=b_concrete_rod*175 //175g for 25
+      max+=plus(b_concrete_rod*175)
+      min+=plus(b_concrete_rod*175) //175g for 25
 
       b_marble = Math.floor((marble_number - reduce_marble)/50)
-      max+=b_marble*375
-      min+=b_marble*375 //375g for 50
+      max+=plus(b_marble*375)
+      min+=plus(b_marble*375) //375g for 50
 
       b_marble_rod = Math.floor((marble_rod_number - reduce_marble_rod)/25)
-      max+=b_marble_rod*187
-      min+=b_marble_rod*187 //187g for 25
+      max+=plus(b_marble_rod*187)
+      min+=plus(b_marble_rod*187) //187g for 25
 
       b_titanium = Math.floor((titanium_number - reduce_titanium)/50)
-      max+=b_titanium*400 //400g for 50
-      min+=b_titanium*400
+      max+=plus(b_titanium*400) //400g for 50
+      min+=plus(b_titanium*400)
 
       b_titanium_rod = Math.floor((titanium_rod_number - reduce_titanium_rod)/25)
-      max+=b_titanium_rod*200
-      min+=b_titanium_rod*200 //200g for 25
+      max+=plus(b_titanium_rod*200)
+      min+=plus(b_titanium_rod*200) //200g for 25
 
       b_obsidian = Math.floor((obsidian_number - reduce_obsidian)/50)
-      max+=b_obsidian*425
-      min+=b_obsidian*425 //425g for 50
+      max+=plus(b_obsidian*425)
+      min+=plus(b_obsidian*425) //425g for 50
 
       b_throne = throne_number - reduce_throne
       throne_max=1+10 //from codes
-      max+=b_throne*100 //100g for 1
+      max+=plus(b_throne*100) //100g for 1
       if (b_throne>throne_max) {min+=(b_throne-throne_max)*100} //excludes free ones
       else {min+=b_throne*0} //for free
       
       b_flag = flag_number - reduce_flag
       flag_max=10 //from codes
-      max+=b_flag*40 //shop price 40g for 1
+      max+=plus(b_flag*40) //shop price 40g for 1
       if (b_flag>flag_max) {min+=(b_flag-flag_max)*40} //excluding free ones
       else {min+=b_flag*0} //free from codes
 
       b_cannon = cannon_number - reduce_cannon
       cannon_max=5+4+25 + 25 //from codes and dragon quest
-      max+=b_cannon*80 //shop 80g for 1
+      max+=plus(b_cannon*80) //shop 80g for 1
       if (b_cannon>cannon_max) {min+=(b_cannon-cannon_max)*80} //excluding free
       else {min+=b_cannon*0} //for free
 
       b_harpoon = harpoon_number - reduce_harpoon
-      max+=b_harpoon*200 //shop 200g for 1
-      min+=b_harpoon*0 //gift battle
+      max+=plus(b_harpoon*200) //shop 200g for 1
+      min+=plus(b_harpoon*0) //gift battle
 
       b_plane_pack = Math.floor(red_jet_number/3)
-      max+=b_plane_pack*4000
-      min+=b_plane_pack*4000 //4000 for 1 pack
+      max+=plus(b_plane_pack*4000)
+      min+=plus(b_plane_pack*4000) //4000 for 1 pack
 
       b_boat_pack = boat_motor_number
       boat_max=1 //one free from joining first time after 2021 or whatever
-      max+=b_boat_pack*450 //boats pack
+      max+=plus(b_boat_pack*450) //boats pack
       if (b_boat_pack>boat_max) {min+=(b_boat_pack-boat_max)*450 //includes free one
       } else {min+=b_boat_pack*0} //obtained for free
 
       b_glue = glue_number - reduce_glue
       glue_max=10+5+1+1+1 + 25 + 10//from codes and quest and teacup egg 2020
-      max+=b_glue*15 //15g for 1 
+      max+=plus(b_glue*15) //15g for 1 
       if (b_glue>glue_max) {min+=(b_glue-glue_max)*15} //excludes free ones
       else {min+=b_glue*0} //obtained from codes and/or quest
 
       b_button = button_number - reduce_button
       //codes useless because min=0
-      max+=b_button*75 //i dont ever remember this price but its on the wiki right now (8 apr 2026), its 50g for 1 in game now
-      min+=b_button*0 //repeatable gift battle
+      max+=plus(b_button*75) //i dont ever remember this price but its on the wiki right now (8 apr 2026), its 50g for 1 in game now
+      min+=plus(b_button*0) //repeatable gift battle
 
       b_camera = camera_number
-      max+=b_camera*85 //shop price 85g for 1
-      min+=b_camera*0 //blue gift 2020
+      max+=plus(b_camera*85) //shop price 85g for 1
+      min+=plus(b_camera*0) //blue gift 2020
 
       b_dome = dome_number
-      max+=b_dome*85 //shop price 85g for 1
-      min+=b_dome*0 //yellow gift 2020
+      max+=plus(b_dome*85) //shop price 85g for 1
+      min+=plus(b_dome*0) //yellow gift 2020
 
       b_switch = switch_number - reduce_switch
-      max+=b_switch*50
-      min+=b_switch*50 //50g for 1
+      max+=plus(b_switch*50)
+      min+=plus(b_switch*50) //50g for 1
 
       b_lightbulb = lightbulb_number/3
-      max+=b_lightbulb*60 //60g for 3
-      min+=b_lightbulb*0 //plastic egg 2021
+      max+=plus(b_lightbulb*60) //60g for 3
+      min+=plus(b_lightbulb*0) //plastic egg 2021
 
       b_parachute = parachute_number/3 // number of parachute packs bought
-      max+=b_parachute*45 //shop price 45g for 3
-      min+=b_parachute*0 //plastic egg 2021
+      max+=plus(b_parachute*45) //shop price 45g for 3
+      min+=plus(b_parachute*0) //plastic egg 2021
 
       b_delay = delay_number/2
-      max+=b_delay*50
-      min+=b_delay*50 //shop 50g for 2
+      max+=plus(b_delay*50)
+      min+=plus(b_delay*50) //shop 50g for 2
 
       b_note = note_number/2
-      max+=b_note*40 //shop 40g for 2
-      min+=b_note*0 //2021 present
+      max+=plus(b_note*40) //shop 40g for 2
+      min+=plus(b_note*0) //2021 present
 
       b_piston = piston_number - reduce_piston
       //codes useless because min=0
-      max+=b_piston*65 //shop 65g for 1
-      min+=b_piston*0 //golden egg 2019
+      max+=plus(b_piston*65) //shop 65g for 1
+      min+=plus(b_piston*0) //golden egg 2019
 
       b_hinge = Math.floor((hinge_number - reduce_hinge)/3)
       hinge_max=5/3 //from codes
-      max+=b_hinge*45 //shop 45g for 3
+      max+=plus(b_hinge*45) //shop 45g for 3
       if (b_hinge>hinge_max) {min+=(b_hinge-hinge_max)*45} //excluding 5 free ones
       else {min+=b_hinge*0} //free from code
 
       b_bar = bar_number/3
-      max+=b_bar*60
-      min+=b_bar*60 //shop 60g for 3
+      max+=plus(b_bar*60)
+      min+=plus(b_bar*60) //shop 60g for 3
 
       b_rope = rope_number/3
-      max+=b_rope*60
-      min+=b_rope*60 //shop 60g for 3
+      max+=plus(b_rope*60)
+      min+=plus(b_rope*60) //shop 60g for 3
 
       b_legacy_car_pack = Math.floor(legacy_wheel_number/4)
       legacy_max=1+1 //2 packs (4+4 legacy wheels from codes)
-      max+=b_legacy_car_pack*900 //old price i think?
+      max+=plus(b_legacy_car_pack*900) //old price i think?
       if (b_legacy_car_pack>legacy_max) {min+=(b_legacy_car_pack-legacy_max)*750} //shop price 750g and excludes free ones????!?!
       else {min+=b_legacy_car_pack*0} //free ones
       reduce_suspension = b_legacy_car_pack*4
 
       b_suspension = (suspension_number - reduce_suspension)/3
       suspension_max=4/3 //4 free ones (divide by 3 because the pack size is 3 in shop)
-      max+=b_suspension*60 //shop 60g for 3
+      max+=plus(b_suspension*60) //shop 60g for 3
       if (b_suspension>suspension_max) {min+=(b_suspension-suspension_max)*60} //excludes 4 free ones
       else {min+=b_suspension*0} //obtained for free
 
       b_new_car_pack = front_wheel_number/2
-      max+=b_new_car_pack*750
-      min+=b_new_car_pack*750 //new car pack 750g
+      max+=plus(b_new_car_pack*750)
+      min+=plus(b_new_car_pack*750) //new car pack 750g
 
       b_magnet = magnet_number
       magnet_max=1+1 //from codes
-      max+=b_magnet*125 //shop 125g for 1
+      max+=plus(b_magnet*125) //shop 125g for 1
       if (b_magnet>magnet_max) {min+=(b_magnet-magnet_max)*125} //excludes 2 from code
       else {min+=b_magnet*0} //obtained for free
 
       b_coal = Math.floor((coal_number - reduce_coal)/50)
-      max+=b_coal*375 //shop 375g for 50
-      min+=b_coal*0 //green present 2019
+      max+=plus(b_coal*375) //shop 375g for 50
+      min+=plus(b_coal*0) //green present 2019
 
       b_sign = sign_number - reduce_sign
-      max+=b_sign*45 //shop 45g for 1
-      min+=b_sign*0 //2019 red present
+      max+=plus(b_sign*45) //shop 45g for 1
+      min+=plus(b_sign*0) //2019 red present
 
       b_jack = jack_number //jack o lantern pumpkin (with the carved face when clicked)
       //codes dont matter because min=0
-      max+=b_jack*60 //shop price 60g for 1
-      min+=b_jack*0 //replayable jack o lantern boss fight
+      max+=plus(b_jack*60) //shop price 60g for 1
+      min+=plus(b_jack*0) //replayable jack o lantern boss fight
 
       b_bouncy = bouncy_number/50 
       bouncy_max=(10+50+40)/50 //from codes packs and 40 from old soccer quest (100 blocks)
-      max+=(b_bouncy*50)*50/3 //limited shop price 50g for 3 (most expensive)
+      max+=plus((b_bouncy*50)*50/3) //limited shop price 50g for 3 (most expensive)
       if (b_bouncy>bouncy_max) {min+=(b_bouncy-bouncy_max)*300} //bought + free ones
       else {min+=b_bouncy*0} //free from codes or idk
 
       b_jetpack = jetpack_number
-      max+=b_jetpack*350 //shop 350g for 1
-      min+=b_jetpack*0 //free from rocket egg 2019
+      max+=plus(b_jetpack*350) //shop 350g for 1
+      min+=plus(b_jetpack*0) //free from rocket egg 2019
 
       b_shield = shield_number
       //codes useless because min=0
-      max+=b_shield*150 //shop 150g for 1
-      min+=b_shield*0 //electric egg 2019
+      max+=plus(b_shield*150) //shop 150g for 1
+      min+=plus(b_shield*0) //electric egg 2019
 
       b_star_jetpack=star_jetpack_number
       star_jetpack_max=1 //from code
-      max+=b_star_jetpack*450 //shop 450g for 1 (all bought)
+      max+=plus(b_star_jetpack*450) //shop 450g for 1 (all bought)
       if (b_star_jetpack>star_jetpack_max) {min+=(b_star_jetpack-star_jetpack_max)*450} //excluding free one
       else {min+=b_star_jetpack*0} //free excluding one
 
@@ -1763,7 +1771,6 @@
       
       out+=`==============================================\n`
       out+=`OTHER STATS:\n`
-      out+=`-Number of 2020 winter chests bought: ${b_2020winter_chest}\n`
       out+=`-Number of 2021 winter chests bought: ${b_2021winter_chest}\n`
       out+=`-Number of common chests bought: ${b_common}\n`
       out+=`-Number of uncommon chests bought: ${b_uncommon}\n`
