@@ -1049,6 +1049,8 @@
       classic_number=get('classic_firework');
 
       potion_number=get('potions');
+
+      life_number=get('life');
       
       glue_number=get('glue');
       balloon_number=get('balloon');
@@ -1703,6 +1705,10 @@
       max+=plus(b_suspension*60) //shop 60g for 3
       if (b_suspension>suspension_max) {min+=(b_suspension-suspension_max)*60} //excludes 4 free ones
       else {min+=b_suspension*0} //obtained for free
+
+      b_life=life_number
+      max+=plus(b_life*85)
+      min+=plus(b_life*85)
 
       b_new_car_pack = front_wheel_number/2
       max+=plus(b_new_car_pack*750)
