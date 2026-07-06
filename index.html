@@ -367,6 +367,11 @@
     </div>
 
     <div class="item">
+      <img src="./items/sn.png" class="image">
+      <label>Sensor block: <input id="sensor" type="number" step="1" value="0" class="input"></label>
+    </div>
+
+    <div class="item">
       <img src="./items/can.png" class="image">
       <label>Cannon: <input id="cannon" type="number" step="1" value="0" class="input"></label>
     </div>
@@ -636,6 +641,16 @@
       <label>Music note: <input id="note" type="number" step="1" value="0" class="input"></label>
     </div>
 
+    <div class="item">
+      <img src="./items/ds.png" class="image">
+      <label>Display block: <input id="display" type="number" step="1" value="0" class="input"></label>
+    </div>
+
+    <div class="item">
+      <img src="./items/gt.png" class="image">
+      <label>Gate: <input id="gate" type="number" step="1" value="0" class="input"></label>
+    </div>
+
     <!--
     <div class="item">
       <img src="./items/cs.png" class="image">
@@ -649,6 +664,11 @@
       <label>Pilot seat: <input id="pilot_seat" type="number" step="1" value="0" class="input"></label>
     </div>
     -->
+
+    <div class="item">
+      <img src="./items/re.png" class="image">
+      <label>Remote Controller: <input id="remote" type="number" step="1" value="0" class="input"></label>
+    </div>
 
     <!--
     <div class="item">
@@ -946,8 +966,10 @@
   <script>
     //original version was made in python on 8 dec 2024
     //v1.0.0 - initial release
-    //v1.0.1 - fixed peppermin wheels (takes the minimum from both)
+    //v1.0.1 - fixed peppermint wheels (takes the minimum from both)
     //v1.0.2 - fixed some blocks going into negatives (because of low amount of chests bought), removed winter 2020 chests bought counter (impossible to determine because toy blocks were on sale)
+    //v1.0.3 - fixed life perserver
+    //v1.1.0 - added items from logic update
 
     //inventory net worth calculator 9 apr 2026 (by @dabl2928 on youtube)
     //this script is licensed under GNU General Public License v3
@@ -956,17 +978,17 @@
     //source: https://www.roblox.com/games/537413528/Build-A-Boat-For-Treasure
 
     function io(id) {
-      return document.getElementById(id);
+      return document.getElementById(id)
     } //input output
 
     function round(n) {
-      return Math.round(n);
+      return Math.round(n)
     }
 
     function get(id) {
-      tmp=parseFloat(io(id).value);
-      val=Math.floor(tmp);
-      return val;
+      tmp=parseFloat(io(id).value)
+      val=Math.floor(tmp)
+      return val
     }
 
     function plus(num) {
@@ -975,125 +997,129 @@
     }
 
     function networth() {
-      wood_number=get('wood');
-      smooth_wood_number=get('smooth_wood');
-      glass_number=get('glass');
-      stone_number=get('stone');
-      bouncy_number=get('bouncy');
-      concrete_number=get('concrete');
-      marble_number=get('marble');
-      titanium_number=get('titanium');
-      obsidian_number=get('obsidian');
-      rusted_metal_number=get('rusted');
-      metal_number=get('metal');
-      toy_number=get('toy');
-      grass_number=get('grass');
-      sand_number=get('sand');
-      coal_number=get('coal');
-      plastic_number=get('plastic');
-      brick_number=get('brick');
-      ice_number=get('ice');
-      treasure_number=get('og_chest');
+      wood_number=get('wood')
+      smooth_wood_number=get('smooth_wood')
+      glass_number=get('glass')
+      stone_number=get('stone')
+      bouncy_number=get('bouncy')
+      concrete_number=get('concrete')
+      marble_number=get('marble')
+      titanium_number=get('titanium')
+      obsidian_number=get('obsidian')
+      rusted_metal_number=get('rusted')
+      metal_number=get('metal')
+      toy_number=get('toy')
+      grass_number=get('grass')
+      sand_number=get('sand')
+      coal_number=get('coal')
+      plastic_number=get('plastic')
+      brick_number=get('brick')
+      ice_number=get('ice')
+      treasure_number=get('og_chest')
 
-      wood_rod_number=get('wood_r');
-      stone_rod_number=get('stone_r');
-      rusted_rod_number=get('rusted_r');
-      metal_rod_number=get('metal_r');
-      concrete_rod_number=get('concrete_r');
-      titanium_rod_number=get('titanium_r');
-      marble_rod_number=get('marble_r');
+      wood_rod_number=get('wood_r')
+      stone_rod_number=get('stone_r')
+      rusted_rod_number=get('rusted_r')
+      metal_rod_number=get('metal_r')
+      concrete_rod_number=get('concrete_r')
+      titanium_rod_number=get('titanium_r')
+      marble_rod_number=get('marble_r')
 
-      wedge_number=get('wedge');
-      peppermint_front_number=get('back_christmas');
-      peppermint_back_number=get('front_christmas');
-      corner_wedge_number=get('corner');
-      wooden_seat_number=get('seat');
-      step_number=get('step');
-      truss_number=get('truss');
-      mast_number=get('mast');
-      helm_number=get('helm');
-      window_number=get('window');
-      door_number=get('door');
-      locked_door_number=get('locked_door');
-      trapdoor_number=get('hatch');
+      wedge_number=get('wedge')
+      peppermint_front_number=get('back_christmas')
+      peppermint_back_number=get('front_christmas')
+      corner_wedge_number=get('corner')
+      wooden_seat_number=get('seat')
+      step_number=get('step')
+      truss_number=get('truss')
+      mast_number=get('mast')
+      helm_number=get('helm')
+      window_number=get('window')
+      door_number=get('door')
+      locked_door_number=get('locked_door')
+      trapdoor_number=get('hatch')
 
-      legendary_number=get('legendary');
-      epic_number=get('epic');
-      rare_number=get('rare');
-      uncommon_number=get('uncommon');
-      common_number=get('common');
+      legendary_number=get('legendary')
+      epic_number=get('epic')
+      rare_number=get('rare')
+      uncommon_number=get('uncommon')
+      common_number=get('common')
 
-      tnt_number=get('tnt'); //barrel
-      dynamite_number=get('dynamite'); //red dynamite
-      spike_number=get('spike');
-      pine_number=get('pine');
-      torch_number=get('torch');
-      lamp_number=get('lamp');
-      candle_number=get('candle');
-      ibeam_number=get('ibeam');
-      metal_chair_number=get('chair');
-      throne_number=get('throne');
-      fabric_number=get('fabric');
-      flag_number=get('flag');
-      snowball_number=get('snowball');
-      minigun_number=get('minigun');
-      harpoon_number=get('harpoon');
-      red_jet_number=get('red_jet');
-      boat_motor_number=get('boat_motor');
-      boxing_number=get('boxing');
+      tnt_number=get('tnt') //barrel
+      dynamite_number=get('dynamite') //red dynamite
+      spike_number=get('spike')
+      pine_number=get('pine')
+      torch_number=get('torch')
+      lamp_number=get('lamp')
+      candle_number=get('candle')
+      ibeam_number=get('ibeam')
+      metal_chair_number=get('chair')
+      throne_number=get('throne')
+      fabric_number=get('fabric')
+      flag_number=get('flag')
+      snowball_number=get('snowball')
+      minigun_number=get('minigun')
+      harpoon_number=get('harpoon')
+      red_jet_number=get('red_jet')
+      boat_motor_number=get('boat_motor')
+      boxing_number=get('boxing')
       
-      firework1=get('firework1');
-      firework2=get('firework2');
-      firework3=get('firework3');
-      firework4=get('firework4');
-      classic_number=get('classic_firework');
+      firework1=get('firework1')
+      firework2=get('firework2')
+      firework3=get('firework3')
+      firework4=get('firework4')
+      classic_number=get('classic_firework')
 
-      potion_number=get('potions');
+      potion_number=get('potions')
 
-      life_number=get('life');
+      sensor_number=get('sensor')
+      display_number=get('display')
+      gate_number=get('gate')
+      remote_number=get('remote')
       
-      glue_number=get('glue');
-      balloon_number=get('balloon');
-      star_balloon_number=get('star_balloon');
-      button_number=get('button');
-      camera_number=get('camera');
-      dome_number=get('dome');
-      switch_number=get('switch');
-      lightbulb_number=get('lightbulb');
-      parachute_number=get('parachute');
-      delay_number=get('delay');
-      note_number=get('note');
-      piston_number=get('piston');
-      hinge_number=get('hinge');
-      bar_number=get('bar');
-      rope_number=get('rope');
-      legacy_wheel_number=get('legacy_wheel');
-      suspension_number=get('suspension');
-      front_wheel_number=get('front_wheel');
-      magnet_number=get('magnet');
+      glue_number=get('glue')
+      balloon_number=get('balloon')
+      star_balloon_number=get('star_balloon')
+      button_number=get('button')
+      camera_number=get('camera')
+      dome_number=get('dome')
+      switch_number=get('switch')
+      lightbulb_number=get('lightbulb')
+      parachute_number=get('parachute')
+      delay_number=get('delay')
+      note_number=get('note')
+      piston_number=get('piston')
+      hinge_number=get('hinge')
+      bar_number=get('bar')
+      rope_number=get('rope')
+      legacy_wheel_number=get('legacy_wheel')
+      suspension_number=get('suspension')
+      front_wheel_number=get('front_wheel')
+      magnet_number=get('magnet')
 
-      sign_number=get('sign');
-      jack_number=get('jack');
-      pumpkin_number=get('pumpkin'); //add pumpkin to the grid container with pum.png
+      life_number=get('life')
+      sign_number=get('sign')
+      jack_number=get('jack')
+      pumpkin_number=get('pumpkin')
       
-      big_cannon_number=get('big_cannon');
-      mounted_cannon_number=get('mounted_cannon');
-      flintlock_number=get('mounted_flintlock');
-      sword_number=get('mounted_sword');
-      cannon_number=get('cannon');
-      candy_sword_number=get('candy_sword');
+      big_cannon_number=get('big_cannon')
+      mounted_cannon_number=get('mounted_cannon')
+      flintlock_number=get('mounted_flintlock')
+      sword_number=get('mounted_sword')
+      cannon_number=get('cannon')
+      candy_sword_number=get('candy_sword')
 
-      candy_block_number=get('candy');
-      candy_rod_number=get('candy_r');
+      candy_block_number=get('candy')
+      candy_rod_number=get('candy_r')
       //fix pvp pack number calculation shit
 
-      jetpack_number=get('jetpack');
-      star_jetpack_number=get('star_jetpack');
-      easter_jetpack_number=get('easter_jetpack');
-      shield_number=get('shield');
+      jetpack_number=get('jetpack')
+      star_jetpack_number=get('star_jetpack')
+      easter_jetpack_number=get('easter_jetpack')
+      shield_number=get('shield')
 
-      min=0;
-      max=0;
+      min=0
+      max=0
 
       b_2021winter_chest = Math.floor(candy_sword_number/1) //no other way to get candy sword so its correct
       min+=plus(b_2021winter_chest*60)
@@ -1469,7 +1495,7 @@
       min+= plus(b_stone*275)
       max+= plus(b_stone*275) //275g for 50
 
-      b_stone_rod = Math.floor((stone_rod_number)/25)
+      b_stone_rod = Math.floor(stone_rod_number/25)
       //1 obtainable from code but meh
       min+=plus(b_stone_rod*135)
       max+=plus(b_stone_rod*135) //135g for 25
@@ -1526,6 +1552,30 @@
       //codes/quests useless because min=0
       max+=plus(b_brick*375) //shop price 375g for 50
       min+=plus(b_brick*0) //red egg 2018
+
+      b_sensor=sensor_number
+      sensor_max=2 //free from crate
+      max+=plus(b_sensor*25) //all bought
+      if (b_sensor>sensor_max) {min+=(b_sensor-sensor_max)*25 //25g for 1
+      } else {min+=b_sensor*0} //free from crate
+
+      b_display=Math.ceil(display_number/16)
+      display_max=4 //free from crate
+      max+=plus(b_display*96) //all bought
+      if (b_display>display_max) {min+=(b_display-display_max)*96 //96g for 16
+      } else {min+=b_display*0} //free from crate
+
+      b_gate=Math.ceil(gate_number/4)
+      gate_max=4 //free from crate
+      max+=plus(b_gate*64) //all bought
+      if (b_gate>gate_max) {min+=(b_gate-gate_max)*64 //64g for 4
+      } else {min+=b_gate*0} //free from crate
+
+      b_remote=remote_number
+      remote_max=1 //free from crate
+      max+=plus(b_remote*150) //all bought
+      if (b_remote>remote_max) {min+=(b_remote-remote_max)*150 //150g for 1
+      } else {min+=b_remote*0} //free from crate
 
       b_star_balloon=star_balloon_number
       star_balloon_max=20+20+40 //free from codes
@@ -1788,9 +1838,9 @@
       out+=`-Number of new car packs bought: ${b_new_car_pack}\n`
       out+=`-Number of legacy car packs bought: ${b_legacy_car_pack}\n\n`
       
-      io('out').textContent=out;
+      io('out').textContent=out
     }
 
-    io('calc').onclick=networth;
+    io('calc').onclick=networth
   </script>
 </body>
