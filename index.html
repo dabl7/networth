@@ -63,7 +63,7 @@
 </head>
 <body>
   <h2>Inventory worth calculator (for BABFT)</h2>
-  <pre style="font-size: 9px;">v1.1.0 (YouTube: @dabl2829)</pre>
+  <pre style="font-size: 9px;">v1.1.1 (YouTube: @dabl2829)</pre>
   <p>Note: this calculator won't work correctly if you're from the netherlands (chests rewards are different)</p>
 
   <div class="grid-container">
@@ -970,6 +970,7 @@
     //v1.0.2 - 14 apr 2026 - fixed some blocks going into negatives (because of low amount of chests bought), removed winter 2020 chests bought counter (impossible to determine because toy blocks were on sale)
     //v1.0.3 - 27 apr 2026 - fixed life perserver
     //v1.1.0 -  6 jul 2026 - added items from logic update
+    //v1.1.1 -  7 jul 2026 - small fix for free items
 
     //inventory net worth calculator 9 apr 2026 (by @dabl2928 on youtube)
     //this script is licensed under GNU General Public License v3
@@ -1562,13 +1563,13 @@
       b_display=Math.ceil(display_number/16)
       display_max=4 //free from crate
       max+=plus(b_display*96) //all bought
-      if (b_display>display_max) {min+=(b_display-display_max)*96 //96g for 16
+      if (display_number>display_max) {min+=(b_display-1)*96 //96g for 16
       } else {min+=b_display*0} //free from crate
 
       b_gate=Math.ceil(gate_number/4)
       gate_max=4 //free from crate
       max+=plus(b_gate*64) //all bought
-      if (b_gate>gate_max) {min+=(b_gate-gate_max)*64 //64g for 4
+      if (gate_number>gate_max) {min+=(b_gate-1)*64 //64g for 4
       } else {min+=b_gate*0} //free from crate
 
       b_remote=remote_number
